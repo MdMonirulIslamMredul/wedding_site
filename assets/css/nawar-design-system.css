@@ -1,0 +1,848 @@
+/* ==========================================================================
+   NAWAR TRADE — DESIGN SYSTEM
+   Government-enlisted heavy construction & civil engineering contractor.
+   Built on a strict 60 / 30 / 10 color rule:
+
+     60% Primary   — Cool Light Gray  (#F1F3F5)  → backgrounds / whitespace
+     30% Secondary — Iron Slate Gray  (#2B303A)  → nav, footer, steel blocks
+     10% Accent    — Industrial Yellow(#FFD166)  → highlights, CTAs, badges
+         Neutral   — Midnight Black  (#1A1C20)  → headings / high-contrast text
+
+   Structure:
+     1. Custom Properties (Design Tokens)
+     2. Base Reset & Layout
+     3. Typography
+     4. Layout Primitives (container, section, grid)
+     5. Header / Navbar
+     6. Buttons
+     7. Cards (Services / Projects)
+     8. Badges & Callouts (Ongoing Tenders)
+     9. Footer
+    10. Micro-interactions & Utilities
+   ========================================================================== */
+
+/* ==========================================================================
+   1. CUSTOM PROPERTIES — DESIGN TOKENS
+   ========================================================================== */
+:root {
+  /* --- Core Palette (60-30-10) --- */
+  --nt-primary: #F1F3F5;        /* Cool Light Gray — 60% */
+  --nt-secondary: #2B303A;      /* Iron Slate Gray — 30% */
+  --nt-accent: #FFD166;         /* Industrial Yellow — 10% */
+  --nt-dark: #1A1C20;           /* Midnight Black — headings/text */
+
+  /* --- Derived Tones (tints/shades computed for consistent depth) --- */
+  --nt-primary-50: #FAFBFC;     /* near-white surface, cards on primary bg */
+  --nt-primary-100: #E9ECEF;    /* subtle borders/dividers on primary */
+  --nt-secondary-40: #3A4150;   /* lighter slate — hover surfaces */
+  --nt-secondary-20: #20242C;   /* darker slate — footer / deep panels */
+  --nt-accent-dark: #E6B84D;    /* pressed/active state of accent */
+  --nt-accent-10: rgba(255, 209, 102, 0.1); /* accent tint background */
+  --nt-accent-25: rgba(255, 209, 102, 0.25);
+
+  /* --- Text --- */
+  --nt-text-heading: var(--nt-dark);
+  --nt-text-body: #454B57;
+  --nt-text-muted: #6B7280;
+  --nt-text-on-dark: #EDEFF2;
+  --nt-text-on-dark-muted: #A7ADB8;
+
+  /* --- Surfaces --- */
+  --nt-surface: #FFFFFF;
+  --nt-surface-alt: var(--nt-primary);
+  --nt-border: #DDE1E6;
+  --nt-border-strong: var(--nt-secondary);
+
+  /* --- Typography Scale --- */
+  --nt-font-base: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+  --nt-font-heading: 'Barlow Condensed', 'Segoe UI', Arial, sans-serif;
+  --nt-fs-xs: 0.75rem;
+  --nt-fs-sm: 0.875rem;
+  --nt-fs-base: 1rem;
+  --nt-fs-md: 1.125rem;
+  --nt-fs-lg: 1.5rem;
+  --nt-fs-xl: 2rem;
+  --nt-fs-2xl: 2.75rem;
+  --nt-fs-3xl: 3.5rem;
+  --nt-lh-tight: 1.2;
+  --nt-lh-base: 1.6;
+
+  /* --- Spacing Scale --- */
+  --nt-space-1: 0.25rem;
+  --nt-space-2: 0.5rem;
+  --nt-space-3: 0.75rem;
+  --nt-space-4: 1rem;
+  --nt-space-5: 1.5rem;
+  --nt-space-6: 2rem;
+  --nt-space-8: 3rem;
+  --nt-space-10: 4rem;
+  --nt-space-12: 6rem;
+
+  /* --- Radius --- */
+  --nt-radius-sm: 4px;
+  --nt-radius-md: 6px;
+  --nt-radius-lg: 10px;
+  --nt-radius-pill: 999px;
+
+  /* --- Shadows (kept flat/industrial — no soft glows) --- */
+  --nt-shadow-sm: 0 1px 2px rgba(26, 28, 32, 0.08);
+  --nt-shadow-md: 0 4px 10px rgba(26, 28, 32, 0.10);
+  --nt-shadow-lg: 0 12px 24px rgba(26, 28, 32, 0.14);
+  --nt-shadow-accent: 0 6px 16px rgba(255, 209, 102, 0.35);
+
+  /* --- Motion --- */
+  --nt-transition-fast: 150ms ease;
+  --nt-transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  --nt-transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Layout --- */
+  --nt-container-max: 1240px;
+  --nt-header-height: 88px;
+  --nt-header-height-mobile: 68px;
+}
+
+/* ==========================================================================
+   2. BASE RESET & LAYOUT
+   ========================================================================== */
+.nt-scope,
+.nt-scope * {
+  box-sizing: border-box;
+}
+
+.nt-scope {
+  background-color: var(--nt-primary);
+  color: var(--nt-text-body);
+  font-family: var(--nt-font-base);
+  font-size: var(--nt-fs-base);
+  line-height: var(--nt-lh-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+.nt-scope img {
+  max-width: 100%;
+  display: block;
+}
+
+.nt-scope a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY
+   ========================================================================== */
+.nt-scope h1,
+.nt-scope h2,
+.nt-scope h3,
+.nt-scope h4,
+.nt-scope h5,
+.nt-scope h6,
+.nt-heading {
+  font-family: var(--nt-font-heading);
+  color: var(--nt-text-heading);
+  line-height: var(--nt-lh-tight);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin: 0 0 var(--nt-space-4);
+}
+
+.nt-scope h1, .nt-h1 { font-size: var(--nt-fs-3xl); }
+.nt-scope h2, .nt-h2 { font-size: var(--nt-fs-2xl); }
+.nt-scope h3, .nt-h3 { font-size: var(--nt-fs-xl); }
+.nt-scope h4, .nt-h4 { font-size: var(--nt-fs-lg); }
+
+.nt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nt-space-2);
+  font-size: var(--nt-fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: var(--nt-secondary);
+  margin-bottom: var(--nt-space-2);
+}
+
+.nt-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 3px;
+  background-color: var(--nt-accent);
+  border-radius: var(--nt-radius-pill);
+}
+
+.nt-section-title {
+  max-width: 640px;
+  margin-bottom: var(--nt-space-8);
+}
+
+.nt-section-title p {
+  color: var(--nt-text-muted);
+  font-size: var(--nt-fs-md);
+  margin-top: var(--nt-space-2);
+}
+
+/* ==========================================================================
+   4. LAYOUT PRIMITIVES
+   ========================================================================== */
+.nt-container {
+  width: 100%;
+  max-width: var(--nt-container-max);
+  margin-inline: auto;
+  padding-inline: var(--nt-space-5);
+}
+
+.nt-section {
+  padding-block: var(--nt-space-10);
+}
+
+.nt-section--alt {
+  background-color: var(--nt-surface);
+}
+
+.nt-section--dark {
+  background-color: var(--nt-secondary);
+  color: var(--nt-text-on-dark);
+}
+
+.nt-section--dark .nt-scope h1,
+.nt-section--dark .nt-scope h2,
+.nt-section--dark .nt-scope h3,
+.nt-section--dark h1,
+.nt-section--dark h2,
+.nt-section--dark h3 {
+  color: var(--nt-text-on-dark);
+}
+
+.nt-grid {
+  display: grid;
+  gap: var(--nt-space-6);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.nt-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.nt-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.nt-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 991px) {
+  .nt-grid--3, .nt-grid--4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 575px) {
+  .nt-grid--2, .nt-grid--3, .nt-grid--4 { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   5. HEADER / NAVBAR
+   Commanding, industrial, high-authority. Slate background, light text,
+   yellow accent reserved strictly for active/hover states (10% rule).
+   ========================================================================== */
+.nt-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--nt-secondary);
+  border-bottom: 1px solid var(--nt-secondary-20);
+  transition: box-shadow var(--nt-transition-base), background-color var(--nt-transition-base);
+}
+
+.nt-navbar.is-scrolled {
+  box-shadow: var(--nt-shadow-lg);
+}
+
+.nt-navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nt-space-6);
+  height: var(--nt-header-height);
+}
+
+.nt-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-3);
+  flex-shrink: 0;
+}
+
+.nt-navbar__brand img {
+  height: 42px;
+  width: auto;
+  transition: transform var(--nt-transition-base);
+}
+
+.nt-navbar__brand:hover img {
+  transform: scale(1.03);
+}
+
+.nt-navbar__brand-text {
+  font-family: var(--nt-font-heading);
+  font-weight: 800;
+  font-size: var(--nt-fs-md);
+  color: var(--nt-text-on-dark);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.nt-navbar__brand-text span {
+  display: block;
+  font-size: var(--nt-fs-xs);
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  color: var(--nt-accent);
+  text-transform: uppercase;
+}
+
+.nt-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nt-navbar__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nt-space-1);
+  padding: var(--nt-space-3) var(--nt-space-4);
+  font-size: var(--nt-fs-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--nt-text-on-dark);
+  border-radius: var(--nt-radius-sm);
+  transition: color var(--nt-transition-fast), background-color var(--nt-transition-fast);
+}
+
+.nt-navbar__link::after {
+  content: '';
+  position: absolute;
+  left: var(--nt-space-4);
+  right: var(--nt-space-4);
+  bottom: 6px;
+  height: 2px;
+  background-color: var(--nt-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--nt-transition-base);
+}
+
+.nt-navbar__link:hover,
+.nt-navbar__link:focus-visible {
+  color: var(--nt-accent);
+  background-color: var(--nt-secondary-40);
+}
+
+.nt-navbar__link:hover::after,
+.nt-navbar__link.is-active::after {
+  transform: scaleX(1);
+}
+
+.nt-navbar__link.is-active {
+  color: var(--nt-accent);
+}
+
+/* Dropdown */
+.nt-navbar__item {
+  position: relative;
+}
+
+.nt-navbar__dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 240px;
+  background-color: var(--nt-surface);
+  border-top: 3px solid var(--nt-accent);
+  border-radius: var(--nt-radius-md);
+  box-shadow: var(--nt-shadow-lg);
+  padding: var(--nt-space-2);
+  list-style: none;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity var(--nt-transition-base), transform var(--nt-transition-base), visibility var(--nt-transition-base);
+}
+
+.nt-navbar__item:hover .nt-navbar__dropdown,
+.nt-navbar__item:focus-within .nt-navbar__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nt-navbar__dropdown-link {
+  display: block;
+  padding: var(--nt-space-3) var(--nt-space-4);
+  font-size: var(--nt-fs-sm);
+  font-weight: 600;
+  color: var(--nt-secondary);
+  border-radius: var(--nt-radius-sm);
+  transition: background-color var(--nt-transition-fast), color var(--nt-transition-fast), padding-left var(--nt-transition-fast);
+}
+
+.nt-navbar__dropdown-link:hover {
+  background-color: var(--nt-accent-10);
+  color: var(--nt-dark);
+  padding-left: calc(var(--nt-space-4) + 4px);
+}
+
+/* Quick-contact / CTA cluster */
+.nt-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-4);
+}
+
+.nt-navbar__call {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-2);
+  color: var(--nt-text-on-dark);
+}
+
+.nt-navbar__call-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--nt-accent);
+  color: var(--nt-dark);
+  font-size: var(--nt-fs-md);
+}
+
+.nt-navbar__call-text small {
+  display: block;
+  font-size: var(--nt-fs-xs);
+  color: var(--nt-text-on-dark-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nt-navbar__call-text strong {
+  font-size: var(--nt-fs-md);
+  font-weight: 700;
+}
+
+/* Mobile toggler */
+.nt-navbar__toggler {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--nt-secondary-40);
+  border-radius: var(--nt-radius-sm);
+  cursor: pointer;
+}
+
+.nt-navbar__toggler .nt-navbar__toggler-bar {
+  height: 2px;
+  background-color: var(--nt-text-on-dark);
+  margin-inline: auto;
+  width: 20px;
+  border-radius: var(--nt-radius-pill);
+  transition: transform var(--nt-transition-base), opacity var(--nt-transition-base), width var(--nt-transition-base);
+}
+
+.nt-navbar__toggler:hover .nt-navbar__toggler-bar {
+  background-color: var(--nt-accent);
+  width: 24px;
+}
+
+@media (max-width: 991px) {
+  .nt-navbar__nav,
+  .nt-navbar__actions {
+    display: none;
+  }
+
+  .nt-navbar__toggler {
+    display: flex;
+  }
+
+  .nt-navbar__inner {
+    height: var(--nt-header-height-mobile);
+  }
+}
+
+/* ==========================================================================
+   6. BUTTONS
+   ========================================================================== */
+.nt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nt-space-2);
+  padding: var(--nt-space-3) var(--nt-space-6);
+  font-size: var(--nt-fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-radius: var(--nt-radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--nt-transition-fast), box-shadow var(--nt-transition-base),
+              background-color var(--nt-transition-base), color var(--nt-transition-base),
+              border-color var(--nt-transition-base);
+}
+
+.nt-btn:active {
+  transform: translateY(1px);
+}
+
+.nt-btn--primary {
+  background-color: var(--nt-accent);
+  color: var(--nt-dark);
+}
+
+.nt-btn--primary:hover {
+  background-color: var(--nt-accent-dark);
+  box-shadow: var(--nt-shadow-accent);
+  transform: translateY(-2px);
+}
+
+.nt-btn--secondary {
+  background-color: var(--nt-secondary);
+  color: var(--nt-text-on-dark);
+  border-color: var(--nt-secondary);
+}
+
+.nt-btn--secondary:hover {
+  background-color: var(--nt-secondary-40);
+  transform: translateY(-2px);
+  box-shadow: var(--nt-shadow-md);
+}
+
+.nt-btn--outline {
+  background-color: transparent;
+  color: var(--nt-secondary);
+  border-color: var(--nt-secondary);
+}
+
+.nt-btn--outline:hover {
+  background-color: var(--nt-secondary);
+  color: var(--nt-text-on-dark);
+  transform: translateY(-2px);
+}
+
+.nt-btn--outline-light {
+  background-color: transparent;
+  color: var(--nt-text-on-dark);
+  border-color: rgba(237, 239, 242, 0.4);
+}
+
+.nt-btn--outline-light:hover {
+  background-color: var(--nt-accent);
+  color: var(--nt-dark);
+  border-color: var(--nt-accent);
+}
+
+/* ==========================================================================
+   7. CARDS — SERVICES / PROJECTS
+   Solid, structural, blueprint-like. Iron Slate borders/accents define edges.
+   ========================================================================== */
+.nt-card {
+  position: relative;
+  background-color: var(--nt-surface);
+  border: 1px solid var(--nt-border);
+  border-radius: var(--nt-radius-md);
+  overflow: hidden;
+  transition: transform var(--nt-transition-base), box-shadow var(--nt-transition-base),
+              border-color var(--nt-transition-base);
+}
+
+.nt-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--nt-shadow-lg);
+  border-color: var(--nt-secondary);
+}
+
+.nt-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--nt-secondary-20);
+}
+
+.nt-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--nt-transition-slow);
+}
+
+.nt-card:hover .nt-card__media img {
+  transform: scale(1.06);
+}
+
+.nt-card__index {
+  position: absolute;
+  top: var(--nt-space-3);
+  left: var(--nt-space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background-color: var(--nt-secondary);
+  color: var(--nt-accent);
+  font-weight: 800;
+  font-size: var(--nt-fs-sm);
+  border-radius: var(--nt-radius-sm);
+}
+
+.nt-card__body {
+  padding: var(--nt-space-5);
+  border-top: 3px solid var(--nt-secondary);
+}
+
+.nt-card__category {
+  font-size: var(--nt-fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--nt-text-muted);
+  margin-bottom: var(--nt-space-2);
+}
+
+.nt-card__title {
+  font-size: var(--nt-fs-md);
+  font-weight: 700;
+  color: var(--nt-text-heading);
+  margin-bottom: var(--nt-space-2);
+}
+
+.nt-card__title a {
+  transition: color var(--nt-transition-fast);
+}
+
+.nt-card:hover .nt-card__title a {
+  color: var(--nt-secondary);
+}
+
+.nt-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-4);
+  padding-top: var(--nt-space-4);
+  margin-top: var(--nt-space-4);
+  border-top: 1px dashed var(--nt-border);
+  font-size: var(--nt-fs-xs);
+  color: var(--nt-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.nt-card__meta strong {
+  color: var(--nt-text-heading);
+}
+
+/* Flat "blueprint" variant for Services on the primary gray background */
+.nt-card--service {
+  background-color: var(--nt-primary-50);
+  text-align: left;
+  padding: var(--nt-space-6);
+  border-color: var(--nt-primary-100);
+}
+
+.nt-card--service .nt-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--nt-space-4);
+  background-color: var(--nt-secondary);
+  color: var(--nt-accent);
+  border-radius: var(--nt-radius-md);
+  font-size: var(--nt-fs-lg);
+  transition: background-color var(--nt-transition-base), transform var(--nt-transition-base);
+}
+
+.nt-card--service:hover .nt-card__icon {
+  background-color: var(--nt-accent);
+  color: var(--nt-dark);
+  transform: rotate(-6deg);
+}
+
+/* ==========================================================================
+   8. BADGES & CALLOUTS — ONGOING TENDERS
+   High-visibility use of the 10% Industrial Yellow accent.
+   ========================================================================== */
+.nt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nt-space-2);
+  padding: var(--nt-space-1) var(--nt-space-3);
+  font-size: var(--nt-fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-radius: var(--nt-radius-pill);
+  line-height: 1.4;
+}
+
+.nt-badge--tender {
+  background-color: var(--nt-accent);
+  color: var(--nt-dark);
+  box-shadow: var(--nt-shadow-accent);
+}
+
+.nt-badge--tender::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--nt-dark);
+  animation: nt-pulse 1.8s infinite;
+}
+
+.nt-badge--outline {
+  background-color: transparent;
+  border: 1.5px solid var(--nt-secondary);
+  color: var(--nt-secondary);
+}
+
+.nt-badge--muted {
+  background-color: var(--nt-primary-100);
+  color: var(--nt-text-muted);
+}
+
+/* Full callout banner — e.g. "Ongoing Tenders" strip on Projects page */
+.nt-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--nt-space-4);
+  padding: var(--nt-space-5) var(--nt-space-6);
+  background-color: var(--nt-accent);
+  border-left: 6px solid var(--nt-dark);
+  border-radius: var(--nt-radius-md);
+}
+
+.nt-callout__text {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-3);
+  color: var(--nt-dark);
+  font-weight: 700;
+}
+
+.nt-callout__text .nt-callout__label {
+  font-size: var(--nt-fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.75;
+  display: block;
+  font-weight: 600;
+}
+
+.nt-callout__text .nt-callout__title {
+  font-size: var(--nt-fs-md);
+}
+
+@keyframes nt-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.3); }
+}
+
+/* ==========================================================================
+   9. FOOTER
+   ========================================================================== */
+.nt-footer {
+  background-color: var(--nt-secondary-20);
+  color: var(--nt-text-on-dark-muted);
+  padding-block: var(--nt-space-10) var(--nt-space-6);
+}
+
+.nt-footer a {
+  color: var(--nt-text-on-dark-muted);
+  transition: color var(--nt-transition-fast), padding-left var(--nt-transition-fast);
+}
+
+.nt-footer a:hover {
+  color: var(--nt-accent);
+  padding-left: 4px;
+}
+
+.nt-footer__heading {
+  color: var(--nt-text-on-dark);
+  font-size: var(--nt-fs-md);
+  font-weight: 700;
+  margin-bottom: var(--nt-space-4);
+  position: relative;
+  padding-bottom: var(--nt-space-3);
+}
+
+.nt-footer__heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  height: 3px;
+  background-color: var(--nt-accent);
+}
+
+.nt-footer__bottom {
+  margin-top: var(--nt-space-8);
+  padding-top: var(--nt-space-4);
+  border-top: 1px solid rgba(237, 239, 242, 0.08);
+  font-size: var(--nt-fs-xs);
+  text-align: center;
+}
+
+/* ==========================================================================
+   10. MICRO-INTERACTIONS & UTILITIES
+   ========================================================================== */
+.nt-hover-lift {
+  transition: transform var(--nt-transition-base), box-shadow var(--nt-transition-base);
+}
+
+.nt-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--nt-shadow-md);
+}
+
+.nt-focus-ring:focus-visible {
+  outline: 2px solid var(--nt-accent);
+  outline-offset: 2px;
+}
+
+.nt-divider {
+  height: 1px;
+  background-color: var(--nt-border);
+  border: none;
+  margin-block: var(--nt-space-6);
+}
+
+.nt-divider--accent {
+  height: 3px;
+  width: 60px;
+  background-color: var(--nt-accent);
+}
+
+/* Text/background color utility hooks (used sparingly per 60/30/10 rule) */
+.nt-bg-primary { background-color: var(--nt-primary); }
+.nt-bg-secondary { background-color: var(--nt-secondary); color: var(--nt-text-on-dark); }
+.nt-bg-accent { background-color: var(--nt-accent); color: var(--nt-dark); }
+.nt-text-accent { color: var(--nt-accent); }
+.nt-text-secondary { color: var(--nt-secondary); }
+.nt-text-dark { color: var(--nt-dark); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nt-scope * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
