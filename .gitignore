@@ -45,3 +45,4 @@ _sql/*.sql
 *.sql
 !database/migrations/*.sql
 
+public/assets/images/*
