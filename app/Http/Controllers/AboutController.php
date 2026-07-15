@@ -20,7 +20,8 @@ class AboutController extends Controller
         $about = About::latest()->first();
         $mission=Mission::latest()->first();
         $brands = Brand::all();
-        return view('frontend.about.index', compact('about','mission','brands'));
+        $teams = Committee::all();
+        return view('frontend.about.index', compact('about','mission','brands','teams'));
     }
     public function tech_web_about()
     {
@@ -63,6 +64,7 @@ class AboutController extends Controller
         }
         $about->banner_img = $banner;
         $about->title = $request->title;
+        $about->short_title = $request->short_title;
         $about->description = $request->description;
         $about->short_description = $request->short_description;
         $about->about_image = $about_p;
@@ -94,6 +96,7 @@ class AboutController extends Controller
         }
         $about->banner_img = $banner;
         $about->title = $request->title;
+        $about->short_title = $request->short_title;
         $about->description = $request->description;
         $about->short_description = $request->short_description;
         $about->about_image = $about_p;
