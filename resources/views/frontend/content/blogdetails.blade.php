@@ -361,13 +361,33 @@
                 </div>
             @endif
 
+            @php
+                $shareUrl = urlencode(request()->url());
+                $shareTitle = urlencode($blog->title);
+                // Facebook/Twitter/LinkedIn will automatically pull the title and image if you have OpenGraph meta tags in your header.
+            @endphp
             <div class="share-section">
                 <h4 class="share-title">Share this story</h4>
                 <div class="share-icons">
-                    <a href="#"><i class="ri-facebook-fill"></i></a>
-                    <a href="#"><i class="ri-twitter-fill"></i></a>
-                    <a href="#"><i class="ri-instagram-line"></i></a>
-                    <a href="#"><i class="ri-linkedin-fill"></i></a>
+                    <!-- Facebook Share -->
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ $shareUrl }}" target="_blank" rel="noopener noreferrer" title="Share on Facebook">
+                        <i class="ri-facebook-fill"></i>
+                    </a>
+                    
+                    <!-- Twitter Share -->
+                    <a href="https://twitter.com/intent/tweet?text={{ $shareTitle }}&url={{ $shareUrl }}" target="_blank" rel="noopener noreferrer" title="Share on Twitter">
+                        <i class="ri-twitter-fill"></i>
+                    </a>
+                    
+                    <!-- Instagram (No Web Share API - Copy Link Fallback) -->
+                    <a href="javascript:void(0);" onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard! You can paste this on Instagram.');" title="Copy Link for Instagram">
+                        <i class="ri-instagram-line"></i>
+                    </a>
+                    
+                    <!-- LinkedIn Share -->
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $shareUrl }}" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn">
+                        <i class="ri-linkedin-fill"></i>
+                    </a>
                 </div>
             </div>
 
