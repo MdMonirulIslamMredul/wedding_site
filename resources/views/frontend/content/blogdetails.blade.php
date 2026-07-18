@@ -1,91 +1,378 @@
 @extends('frontend.layouts.app')
+@section('title', $blog->title . ' | Editorial')
 @section('content')
 
 <style>
-/* Modern blog details styling */
-.blog-detail-banner {position:relative; height:420px; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:-60px;}
-.blog-detail-banner::before {content:''; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.65));}
-.blog-detail-banner h1 {position:relative; z-index:2; font-size:48px; font-weight:800; color:#fff; text-align:center; padding:0 20px; line-height:1.2; letter-spacing:1px; text-shadow:0 4px 12px rgba(0,0,0,.5);}
-.blog-detail-container {background:#ffffff; border-radius:24px; box-shadow:0 12px 42px -12px rgba(0,0,0,.18); padding:50px 60px; margin-top:80px; border:2px solid transparent; transition:.35s ease;}
-.blog-detail-container:hover {border-color:#ff8c00;}
-.blog-meta-bar {display:flex; flex-wrap:wrap; gap:24px; align-items:center; padding:0 0 24px; margin-bottom:28px; border-bottom:2px solid #f0f0f0; font-size:15px; color:#555;}
-.blog-meta-bar i {color:#ff8c00; margin-right:6px; font-size:16px;}
-.blog-meta-bar .meta-item {display:flex; align-items:center;}
-.blog-detail-image {border-radius:16px; overflow:hidden; margin-bottom:32px; box-shadow:0 8px 28px -8px rgba(0,0,0,.2);}
-.blog-detail-image img {width:100%; height:auto; display:block; object-fit:cover;}
-.blog-detail-content {font-size:17px; line-height:1.75; color:#2d3748; margin-bottom:40px;}
-.blog-detail-content h2, .blog-detail-content h3 {margin:32px 0 18px; font-weight:700; color:#172b3f;}
-.blog-detail-content h2 {font-size:32px;}
-.blog-detail-content h3 {font-size:26px;}
-.blog-detail-content p {margin-bottom:20px;}
-.blog-detail-content ul, .blog-detail-content ol {margin:20px 0; padding-left:28px;}
-.blog-detail-content li {margin-bottom:10px;}
-.blog-detail-content a {color:#ff8c00; text-decoration:underline; transition:.3s;}
-.blog-detail-content a:hover {color:#d47400;}
-.back-to-blogs {display:inline-flex; align-items:center; gap:8px; background:#f5f7fa; color:#172b3f; font-weight:600; font-size:15px; padding:12px 24px; border-radius:30px; text-decoration:none; border:2px solid #e1e5ea; transition:.35s ease; margin-bottom:30px;}
-.back-to-blogs:hover {background:#ff8c00; color:#fff; border-color:#ff8c00; transform:translateX(-4px);}
-.back-to-blogs i {font-size:18px;}
-/* Dark theme */
-.theme-dark .blog-detail-container {background:#1f2937; box-shadow:0 12px 42px -12px rgba(0,0,0,.55);}
-.theme-dark .blog-detail-content {color:#d1d5db;}
-.theme-dark .blog-detail-content h2, .theme-dark .blog-detail-content h3 {color:#e5e7eb;}
-.theme-dark .blog-meta-bar {border-bottom-color:#374151; color:#9ca3af;}
-.theme-dark .back-to-blogs {background:#243447; border-color:#2f4254; color:#e5e7eb;}
-.theme-dark .back-to-blogs:hover {background:#ff8c00; color:#fff;}
-@media (max-width: 991px){ .blog-detail-container {padding:40px 35px;} .blog-detail-banner h1 {font-size:38px;} }
-@media (max-width: 575px){ .blog-detail-container {padding:30px 20px; margin-top:60px;} .blog-detail-banner {height:320px;} .blog-detail-banner h1 {font-size:28px;} .blog-detail-content {font-size:16px;} }
+/* Modern blog details styling - Premium Dark/Gold */
+.page-header {
+    position: relative;
+    padding: 220px 0 140px;
+    background: #1A1C20;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.25;
+    z-index: 0;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 180px;
+    background: linear-gradient(to top, #121212, transparent);
+    z-index: 1;
+}
+
+.page-title {
+    position: relative;
+    z-index: 2;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.2;
+}
+
+.page-subtitle {
+    position: relative;
+    z-index: 2;
+    color: #C5A059;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.blog-detail-section {
+    background: #121212;
+    padding-bottom: 100px;
+}
+
+.blog-detail-container {
+    background: #1A1C20;
+    padding: 70px 90px;
+    max-width: 1000px;
+    margin: -100px auto 0;
+    position: relative;
+    z-index: 10;
+    border: 1px solid #333;
+    border-top: 3px solid #C5A059;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.blog-meta-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 0.85rem;
+    color: #C5A059;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 50px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+.blog-meta-bar .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.blog-meta-bar .meta-item i {
+    font-size: 1.1rem;
+}
+
+.blog-detail-image {
+    margin: 50px 0;
+    position: relative;
+}
+
+.blog-detail-image::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: -12px; right: -12px; bottom: -12px;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    z-index: 0;
+}
+
+.blog-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.blog-detail-content {
+    font-size: 1.15rem;
+    line-height: 2;
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+/* Force text colors to override WYSIWYG inline styles */
+.blog-detail-content p,
+.blog-detail-content span,
+.blog-detail-content div,
+.blog-detail-content li,
+.blog-detail-content b,
+.blog-detail-content strong,
+.blog-detail-content i,
+.blog-detail-content em {
+    color: #e0e0e0 !important;
+}
+
+/* Elegant Drop cap for first paragraph */
+.blog-detail-content > p:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 18px;
+    margin-top: 8px;
+    color: #C5A059;
+}
+
+.blog-detail-content h2, .blog-detail-content h3, .blog-detail-content h4 {
+    margin: 50px 0 25px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: #fff !important;
+    line-height: 1.3;
+}
+
+.blog-detail-content h2 { font-size: 2.6rem; color: #fff !important; }
+.blog-detail-content h3 { font-size: 2.1rem; color: #fff !important; }
+.blog-detail-content h4 { font-size: 1.6rem; color: #C5A059 !important; }
+
+.blog-detail-content p {
+    margin-bottom: 30px;
+}
+
+.blog-detail-content ul, .blog-detail-content ol {
+    margin: 30px 0;
+    padding-left: 20px;
+}
+
+.blog-detail-content li {
+    margin-bottom: 15px;
+    padding-left: 10px;
+}
+
+.blog-detail-content a {
+    color: #C5A059;
+    text-decoration: none;
+    border-bottom: 1px solid #C5A059;
+    transition: all 0.3s ease;
+}
+
+.blog-detail-content a:hover {
+    color: #fff;
+    border-bottom-color: transparent;
+}
+
+/* Premium Blockquotes */
+.blog-detail-content blockquote {
+    padding: 40px 50px;
+    margin: 50px 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 3px solid #C5A059;
+    position: relative;
+}
+
+.blog-detail-content blockquote::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 90px;
+    color: rgba(197, 160, 89, 0.1);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    line-height: 1;
+}
+
+.blog-detail-content blockquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-style: italic;
+    color: #fff;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    line-height: 1.6;
+}
+
+/* Back button */
+.back-btn-wrapper {
+    margin-bottom: 45px;
+}
+
+.back-to-blogs {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #999;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-to-blogs i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.back-to-blogs:hover {
+    color: #C5A059;
+}
+
+.back-to-blogs:hover i {
+    transform: translateX(-6px);
+}
+
+/* Share Section */
+.share-section {
+    margin-top: 70px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.share-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #fff;
+    margin: 0;
+}
+
+.share-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.share-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    color: #ccc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-icons a:hover {
+    border-color: #C5A059;
+    color: #fff;
+    background: #C5A059;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2);
+}
+
+@media (max-width: 991px) {
+    .page-title { font-size: 3rem; }
+    .blog-detail-container { padding: 50px 40px; }
+}
+@media (max-width: 767px) {
+    .page-header { padding: 150px 0 100px; }
+    .page-title { font-size: 2.2rem; }
+    .blog-detail-container { padding: 40px 25px; margin-top: -50px; }
+    .blog-meta-bar { flex-direction: column; gap: 15px; align-items: center; margin-bottom: 30px; }
+    .blog-detail-content h2 { font-size: 2rem; }
+    .share-section { flex-direction: column; gap: 20px; text-align: center; }
+}
 </style>
 
-    <div class="blog-detail-banner" style="background-image: url('{{ asset('/setting/blog/' . $blog->banner) }}');">
-    </div>
-    <div class="py-5">
-        <div class="container">
-            <div class="blog-detail-container" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+<div class="page-header">
+    <style>
+        .page-header::before {
+            background-image: url('{{ asset("/setting/blog/" . $blog->banner) }}');
+        }
+    </style>
+    <div class="page-subtitle">Editorial</div>
+    <h1 class="page-title">{{ $blog->title }}</h1>
+</div>
+
+<div class="blog-detail-section">
+    <div class="container">
+        <div class="blog-detail-container" data-aos="fade-up" data-aos-duration="1000" data-aos-once="true">
+            
+            <div class="back-btn-wrapper">
                 <a href="/blogs" class="back-to-blogs">
-                    <i class="flaticon-left-arrow"></i> Back to Blogs
+                    <i class="fa fa-long-arrow-left"></i> Back to Journal
                 </a>
+            </div>
 
-                <div class="blog-meta-bar">
-                    <div class="meta-item">
-                        <i class="flaticon-user"></i>
-                        <span>Admin</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fa fa-calendar-check-o"></i>
-                        <span>{{ date('j F, Y', strtotime($blog->created_at)) }}</span>
-                    </div>
+            <div class="blog-meta-bar">
+                <div class="meta-item">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Editorial Team</span>
                 </div>
-
-                @if(!empty($blog->image1))
-                    <div class="blog-detail-image">
-                        <img src="{{ asset('/setting/blog/' . $blog->image1) }}" alt="{{ $blog->title }}">
-                    </div>
-                @endif
-
-                @if(!empty($blog->details1))
-                    <div class="blog-detail-content">
-                        {!! $blog->details1 !!}
-                    </div>
-                @endif
-
-                @if(!empty($blog->image2))
-                    <div class="blog-detail-image">
-                        <img src="{{ asset('/setting/blog/' . $blog->image2) }}" alt="{{ $blog->title }}">
-                    </div>
-                @endif
-
-                @if(!empty($blog->details2))
-                    <div class="blog-detail-content">
-                        {!! $blog->details2 !!}
-                    </div>
-                @endif
-
-                <div class="text-center mt-5">
-                    <a href="/blogs" class="back-to-blogs">
-                        <i class="flaticon-left-arrow"></i> Back to All Blogs
-                    </a>
+                <div class="meta-item">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>{{ date('F j, Y', strtotime($blog->created_at)) }}</span>
                 </div>
             </div>
+
+            @if(!empty($blog->image1))
+                <div class="blog-detail-image">
+                    <img src="{{ asset('/setting/blog/' . $blog->image1) }}" alt="{{ $blog->title }}">
+                </div>
+            @endif
+
+            @if(!empty($blog->details1))
+                <div class="blog-detail-content">
+                    {!! $blog->details1 !!}
+                </div>
+            @endif
+
+            @if(!empty($blog->image2))
+                <div class="blog-detail-image">
+                    <img src="{{ asset('/setting/blog/' . $blog->image2) }}" alt="{{ $blog->title }}">
+                </div>
+            @endif
+
+            @if(!empty($blog->details2))
+                <div class="blog-detail-content">
+                    {!! $blog->details2 !!}
+                </div>
+            @endif
+
+            <div class="share-section">
+                <h4 class="share-title">Share this story</h4>
+                <div class="share-icons">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
+
 @endsection
