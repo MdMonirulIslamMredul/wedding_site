@@ -11,7 +11,7 @@ class Contact extends Model
 {
   use HasFactory, SoftDeletes;
 
-  protected $table = 'contact';
+  protected $table = 'contacts';
 
   public $primaryKey = 'id';
 

@@ -91,4 +91,13 @@ class ContactController extends Controller
       ->route('admin.messaging.contact.index')
       ->withFlashSuccess('message deleted successfully');
   }
+
+  public function updateStatus($id)
+  {
+    $contact = Contact::findOrFail($id);
+    $contact->is_connected = !$contact->is_connected;
+    $contact->save();
+
+    return redirect()->back()->withFlashSuccess('Contact status updated successfully');
+  }
 }
