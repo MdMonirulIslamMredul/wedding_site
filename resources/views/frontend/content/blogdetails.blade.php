@@ -322,17 +322,17 @@
             
             <div class="back-btn-wrapper">
                 <a href="/blogs" class="back-to-blogs">
-                    <i class="fa fa-long-arrow-left"></i> Back to Journal
+                    <i class="ri-arrow-left-line"></i> Back to Journal
                 </a>
             </div>
 
             <div class="blog-meta-bar">
                 <div class="meta-item">
-                    <i class="fa-regular fa-user"></i>
+                    <i class="ri-user-3-line"></i>
                     <span>Editorial Team</span>
                 </div>
                 <div class="meta-item">
-                    <i class="fa-regular fa-calendar"></i>
+                    <i class="ri-calendar-line"></i>
                     <span>{{ date('F j, Y', strtotime($blog->created_at)) }}</span>
                 </div>
             </div>
@@ -364,10 +364,10 @@
             <div class="share-section">
                 <h4 class="share-title">Share this story</h4>
                 <div class="share-icons">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#"><i class="ri-facebook-fill"></i></a>
+                    <a href="#"><i class="ri-twitter-fill"></i></a>
+                    <a href="#"><i class="ri-instagram-line"></i></a>
+                    <a href="#"><i class="ri-linkedin-fill"></i></a>
                 </div>
             </div>
 
