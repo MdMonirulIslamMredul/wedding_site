@@ -44,7 +44,8 @@ class LoginController
      */
     public function showLoginForm()
     {
-        return view('frontend.auth.login');
+        $about = \App\Models\About::latest()->first();
+        return view('frontend.auth.login', compact('about'));
     }
 
     /**

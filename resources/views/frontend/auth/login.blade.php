@@ -1,16 +1,31 @@
+@php
+    $about = $about ?? \App\Models\About::latest()->first();
+    $bannerFile = $about->banner_img ?? $about->banner ?? null;
+    if ($bannerFile && file_exists(public_path('setting/about/' . $bannerFile))) {
+        $bannerImage = asset('setting/about/' . $bannerFile);
+    } elseif ($bannerFile && file_exists(public_path('setting/banner/' . $bannerFile))) {
+        $bannerImage = asset('setting/banner/' . $bannerFile);
+    } elseif ($bannerFile) {
+        $bannerImage = asset('setting/about/' . $bannerFile);
+    } else {
+        $bannerImage = asset('setting/banner/1763827137.jpg');
+    }
+    $headerLogo = get_setting('header_logo') ?: get_setting('frontend_logo_menu') ?: 'setting/banner/solar.png';
+@endphp
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solartech Admin Login</title>
+  <title>{{ app_name() }} | Admin Login</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
       /* background-image: url('https://wallpapers.com/images/featured/car-wash-0d91u3sqo0qw441a.jpg'); */
-        /* background-image: url('https://media.licdn.com/dms/image/v2/D4D12AQGA6odm93XONA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1675839423933?e=2147483647&v=beta&t=sFnxpwfxHjga1IoNNkjDrAz6bC4PVixKPM7B_84bthI');
+      /* background-image: url('https://media.licdn.com/dms/image/v2/D4D12AQGA6odm93XONA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1675839423933?e=2147483647&v=beta&t=sFnxpwfxHjga1IoNNkjDrAz6bC4PVixKPM7B_84bthI');
       */
-        background-image: url("{{ asset('setting/banner/1763827137.jpg') }}");
+      background-image: url("{{ $bannerImage }}");
       background-size: cover;
       background-position: center;
     }
@@ -31,31 +46,33 @@
     }
 
     .logo-img {
-    width: 200px;   /* or any size you want */
+      width: 200px;
+      /* or any size you want */
     }
   </style>
 </head>
+
 <body class="min-h-screen flex items-center justify-center px-4">
 
   <div class="w-full max-w-md p-8 rounded-3xl glass text-white shadow-2xl">
     <div class="text-center mb-6">
-      <img src="{{ asset('setting/banner/solar.png') }}" alt="Solar Panel Logo" class="logo-img mx-auto mb-4">
-      <h2 class="text-3xl font-bold tracking-wide">Solartech Services</h2>
-      <p class="text-sm text-white/80">Clean Energy. Bright Future.</p>
+      <img src="{{ asset($headerLogo) }}" alt="Logo" class="logo-img mx-auto mb-4">
+      <h2 class="text-3xl font-bold tracking-wide">{{ app_name() }}</h2>
+      <!-- <p class="text-sm text-white/80">Clean Energy. Bright Future.</p> -->
     </div>
 
     <form action="{{ route('frontend.auth.login') }}" method="POST" class="space-y-5" id="loginForm">
-        @csrf
+      @csrf
       <div>
         <label class="block text-sm font-semibold text-white/80 mb-1">Email</label>
         <input type="email" name="email" required placeholder="you@example.com"
           class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-blue-300" />
       </div>
-        @error('email')
-            <span class="invalid-feedback" role="alert" style="text-align:center">
-                <strong style="color: red">{{ $message }}</strong>
-            </span>
-        @enderror
+      @error('email')
+      <span class="invalid-feedback" role="alert" style="text-align:center">
+        <strong style="color: red">{{ $message }}</strong>
+      </span>
+      @enderror
       <div>
         <label class="block text-sm font-semibold text-white/80 mb-1">Password</label>
         <input type="password" name="password" required placeholder="••••••••"
@@ -71,11 +88,12 @@
 
       <button type="submit"
         class="w-full py-3 rounded-lg bg-blue-500 text-white font-semibold tracking-wide transition-all btn-hover">
-        ⚡ Login Now
+        ✅ Login Now
       </button>
     </form>
 
   </div>
 
 </body>
+
 </html>
