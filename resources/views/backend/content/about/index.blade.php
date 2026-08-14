@@ -27,6 +27,10 @@
                         <input type="text" name="title" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label>Short Title</label>
+                        <input type="text" name="short_title" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label>Short Description</label>
                         <textarea class="form-control" col="10" row="5" name="short_description"></textarea>
                     </div>
@@ -62,6 +66,7 @@
                     <tr>
                         <th>Image</th>
                         <th>Title</th>
+                        <th>Short Title</th>
                         <th>Short Description</th>
                         <th>Action</th>
                     </tr>
@@ -72,6 +77,7 @@
                         <td><img src="{{ asset('/setting/about/' . $about->about_image) ?? 'N/A' }}" style="height: 100px">
                         </td>
                         <td>{{ $about->title ?? 'N/A' }}</td>
+                        <td>{{ $about->short_title ?? 'N/A' }}</td>
                         <td>{{ $about->short_description ?? 'N/A' }}</td>
                         <td>
                             <a href="{{ route('admin.about.settings.edit', ['id' => $about->id]) }}" class="btn btn-success">

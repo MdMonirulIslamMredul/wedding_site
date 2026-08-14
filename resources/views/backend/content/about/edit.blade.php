@@ -23,6 +23,10 @@
                             <input type="text" name="title" value="{{ $about->title }}" class="form-control">
                         </div>
                         <div class="form-group">
+                            <label>Short Title</label>
+                            <input type="text" name="short_title" value="{{ $about->short_title ?? '' }}" class="form-control">
+                        </div>
+                        <div class="form-group">
                             <label>Short Description</label>
                             <textarea class="form-control" col="10" row="5" name="short_description">{{ $about->short_description ?? null }}</textarea>
                         </div>
