@@ -30,6 +30,7 @@ use App\Models\Competition;
 use App\Models\CompetitionType;
 use App\Models\CompetitionYear;
 use App\Models\ServicArea;
+use App\Models\VideoGallery;
 use Mail;
 use App\Mail\ContactMail;
 use App\Mail\EventMail;
@@ -43,6 +44,10 @@ class HomeController
     public function index()
     {
         $faqs = Faq::where('page_id', 'home')->get();
+        if ($faqs->isEmpty()) {
+            $faqs = Faq::take(6)->get();
+        }
+        $faq = $faqs;
         $university = University::get();
         $about = About::latest()->first();
         $service_count = 0;
@@ -87,7 +92,12 @@ class HomeController
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('frontend.index', compact('faqs', 'university', 'about', 'galary', 'competition', 'competition_year', 'competition_type', 'product', 'sliders', 'event', 'brands', 'services', 'testmonies', 'blogs', 'projects', 'service_count', 'service_header', 'areas'));
+        $videos = VideoGallery::where('is_active', 1)
+            ->orderBy('id', 'DESC')
+            ->take(2)
+            ->get();
+
+        return view('frontend.index', compact('faqs', 'faq', 'university', 'about', 'galary', 'competition', 'competition_year', 'competition_type', 'product', 'sliders', 'event', 'brands', 'services', 'testmonies', 'blogs', 'projects', 'service_count', 'service_header', 'areas', 'videos'));
     }
      public function servicedetails()
     {
@@ -129,17 +139,19 @@ class HomeController
     }
     public function allgallery()
     {
-        $images = Gallery::where('is_active', 1)->get();
+        $images = Gallery::with('category')->where('is_active', 1)->get();
         $banner = Gallery::whereNotNull('banner')->latest()->first();
-        return view('frontend.content.allgallery', compact('images', 'banner'));
+        $categories = \App\Models\GalleryCategory::where('is_active', 1)->get();
+        return view('frontend.content.allgallery', compact('images', 'banner', 'categories'));
     }
 
     public function gallerydetails($id)
     {
-        $images = Gallery::find($id);
-        $galary = json_decode($images->photos ?? null);
+        $images = Gallery::with('category')->find($id);
+        $galary = Gallery::with('category')->where('is_active', 1)->get(); // Load all active galleries for categorization view
         $banner = Gallery::whereNotNull('banner')->latest()->first();
-        return view('frontend.gallery.gallery', compact('images', 'banner', 'galary'));
+        $categories = \App\Models\GalleryCategory::where('is_active', 1)->get();
+        return view('frontend.gallery.gallery', compact('images', 'banner', 'galary', 'categories'));
     }
 
     public function contact()
@@ -243,5 +255,12 @@ class HomeController
     {
         $testmonies = Testmony::where('is_active', 1)->get();
         return view('frontend.content.testimonials', compact('testmonies'));
+    }
+
+    public function faqindex()
+    {
+        $faqs = Faq::all();
+        $banner = null;
+        return view('frontend.content.faq', compact('faqs', 'banner'));
     }
 }

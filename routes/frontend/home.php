@@ -20,6 +20,62 @@ Route::get('/', [HomeController::class, 'index'])
     ->breadcrumbs(function (Trail $trail) {
         $trail->push(__('Home'), route('frontend.index'));
     });
+
+// New Wedding Pages
+Route::get('/portfolio', function() {
+    return view('frontend.pages.portfolio');
+})->name('portfolio');
+
+Route::get('/cinematography', function() {
+    $videos = \App\Models\VideoGallery::where('is_active', 1)->orderBy('id', 'desc')->get();
+    return view('frontend.pages.cinematography', compact('videos'));
+})->name('cinematography');
+
+// Packages Branch Selector (Dhaka / Chittagong)
+Route::get('/packages', function() {
+    return view('frontend.pages.packages_branches');
+})->name('packages');
+
+// Alias for /branches/package
+Route::get('/branches/package', function() {
+    return view('frontend.pages.packages_branches');
+});
+
+Route::get('/branches/package/{id}', function($id) {
+    $loc = ($id == 2 || strtolower($id) === 'chittagong') ? 'chittagong' : 'dhaka';
+    return redirect()->route('frontend.packages.location', ['location' => $loc]);
+});
+
+// Location-wise packages page
+Route::get('/packages/{location}', function($location = 'dhaka') {
+    $loc = strtolower($location);
+    if (!in_array($loc, ['dhaka', 'chittagong', 'all'])) {
+        $loc = 'dhaka';
+    }
+    
+    if ($loc === 'all') {
+        $packages = \App\Models\Package::where('is_active', 1)->get();
+    } else {
+        $packages = \App\Models\Package::where('is_active', 1)
+            ->where(function($q) use ($loc) {
+                $q->whereRaw('LOWER(location) = ?', [$loc])
+                  ->orWhereNull('location')
+                  ->orWhere('location', '');
+            })->get();
+    }
+
+    $categories = \App\Models\PackageCategory::where('is_active', 1)->get();
+    return view('frontend.pages.packages', compact('packages', 'categories', 'loc'));
+})->name('packages.location');
+
+// Book Us Feature Routes
+Route::get('/book_us', [\App\Http\Controllers\BookUsController::class, 'index'])->name('book_us');
+Route::post('/book_us/store', [\App\Http\Controllers\BookUsController::class, 'store'])->name('book_us.store');
+Route::post('/booking/store', [\App\Http\Controllers\BookUsController::class, 'store'])->name('booking.store');
+Route::get('/filter', [\App\Http\Controllers\BookUsController::class, 'filterPackages'])->name('package.filter');
+Route::get('/packageDetails', [\App\Http\Controllers\BookUsController::class, 'getPackageDetails'])->name('package.details');
+
+
 Route::get('notice/details/{id}', [HomeController::class, 'noticedetails']);
 Route::get('info/details/{id}', [HomeController::class, 'infodetails']);
 Route::get('notice/all', [HomeController::class, 'noticeall']);
@@ -44,6 +100,7 @@ Route::post('/contact/submit', [HomeController::class, 'contactsubmit'])->name('
 
 Route::post('/event/submit', [HomeController::class, 'eventsubmit']);
 Route::post('/volunteer/submit', [HomeController::class, 'volunteersubmit']);
+Route::get('/faq', [HomeController::class, 'faqindex'])->name('faq');
 Route::get('terms', [TermsController::class, 'index'])
     ->name('pages.terms')
     ->breadcrumbs(function (Trail $trail) {

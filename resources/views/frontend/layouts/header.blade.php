@@ -1,6 +1,6 @@
 <style>
     /* ============================================================
-       NAVBAR – matches the reference design
+       NAVBAR – Premium Wedding Design
        ============================================================ */
     .navbar-area {
         position: absolute;
@@ -11,14 +11,15 @@
         background: transparent !important;
         backdrop-filter: none;
         padding: 0;
-        transition: background 0.35s ease, box-shadow 0.35s ease;
+        transition: background 0.4s ease, box-shadow 0.4s ease;
+        font-family: 'Montserrat', sans-serif;
     }
 
     .navbar-area.scrolled {
         position: fixed;
         background: #ffffff !important;
         backdrop-filter: none;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
     }
 
     /* Scrolled state: dark nav links */
@@ -28,12 +29,12 @@
 
     .navbar-area.scrolled .nt-nav-link:hover,
     .navbar-area.scrolled .nt-nav-link:focus {
-        color: #e8344e !important;
-        background: rgba(232, 52, 78, 0.08);
+        color: #C5A059 !important;
+        /* Premium Gold */
     }
 
     .navbar-area.scrolled .nt-nav-item.active .nt-nav-link {
-        color: #e8344e !important;
+        color: #C5A059 !important;
     }
 
     /* Scrolled: hamburger lines dark */
@@ -42,7 +43,7 @@
     }
 
     .navbar-area.scrolled .nt-hamburger {
-        background: rgba(20, 24, 32, 0.08);
+        background: rgba(20, 24, 32, 0.04);
     }
 
     /* ── Desktop nav container ── */
@@ -51,8 +52,8 @@
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        height: 66px;
-        padding: 0 1.5rem;
+        height: 80px;
+        padding: 0 3rem;
     }
 
     /* ── Logo ── */
@@ -61,12 +62,20 @@
         align-items: center;
         flex-shrink: 0;
         text-decoration: none;
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+
+    .navbar-area.scrolled .nt-logo {
+        color: #1a1c20;
     }
 
     .nt-logo img {
-        max-height: 48px;
+        max-height: 50px;
         width: auto;
-        border-radius: 12px;
         display: block;
     }
 
@@ -77,7 +86,7 @@
         list-style: none;
         margin: 0;
         padding: 0;
-        gap: 0.1rem;
+        gap: 1.5rem;
     }
 
     .nt-nav-links .nt-nav-item {
@@ -87,25 +96,41 @@
     .nt-nav-links .nt-nav-link {
         display: inline-block;
         color: #ffffff !important;
-        font-size: 0.82rem;
-        font-weight: 700;
-        letter-spacing: 0.07em;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         text-decoration: none;
-        padding: 0.55rem 0.85rem;
-        border-radius: 4px;
-        transition: color 0.2s ease, background 0.2s ease;
+        padding: 0.55rem 0.5rem;
+        transition: color 0.3s ease;
         white-space: nowrap;
+        position: relative;
+    }
+
+    .nt-nav-links .nt-nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #C5A059;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: width 0.3s ease;
+    }
+
+    .nt-nav-links .nt-nav-link:hover::after,
+    .nt-nav-links .nt-nav-item.active .nt-nav-link::after {
+        width: 100%;
     }
 
     .nt-nav-links .nt-nav-link:hover,
     .nt-nav-links .nt-nav-link:focus {
-        color: #e8344e !important;
-        background: rgba(232, 52, 78, 0.10);
+        color: #C5A059 !important;
     }
 
     .nt-nav-links .nt-nav-item.active .nt-nav-link {
-        color: #e8344e !important;
+        color: #C5A059 !important;
     }
 
     /* ── Phone CTA button ── */
@@ -113,33 +138,28 @@
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: #e8344e;
+        background: #C5A059;
         color: #ffffff !important;
         font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.03em;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
         text-decoration: none;
-        padding: 0.55rem 1.2rem;
-        border-radius: 50px;
+        padding: 0.75rem 1.8rem;
+        border-radius: 2px;
         white-space: nowrap;
         flex-shrink: 0;
-        transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
-        box-shadow: 0 4px 16px rgba(232, 52, 78, 0.35);
+        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2);
     }
 
     .nt-phone-btn:hover,
     .nt-phone-btn:focus {
-        background: #c8203a;
-        box-shadow: 0 6px 22px rgba(232, 52, 78, 0.5);
-        transform: translateY(-1px);
+        background: #B38F48;
+        box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+        transform: translateY(-2px);
         color: #ffffff !important;
         text-decoration: none;
-    }
-
-    .nt-phone-btn svg {
-        width: 16px;
-        height: 16px;
-        flex-shrink: 0;
     }
 
     /* ── Dropdown ── */
@@ -152,10 +172,10 @@
         top: calc(100% + 10px);
         left: 0;
         background: #ffffff;
-        border-top: 3px solid #e8344e;
-        border-radius: 10px;
-        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
-        min-width: 220px;
+        border-top: 3px solid #C5A059;
+        border-radius: 4px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+        min-width: 200px;
         padding: 0.5rem;
         opacity: 0;
         visibility: hidden;
@@ -176,25 +196,28 @@
     .nt-dropdown li a {
         display: block;
         padding: 0.65rem 0.9rem;
-        border-radius: 7px;
-        color: #1a1c20;
-        font-size: 0.88rem;
-        font-weight: 600;
+        border-radius: 2px;
+        color: #1a1c20 !important;
+        font-size: 0.8rem;
+        font-weight: 500;
         text-decoration: none;
         border-left: 3px solid transparent;
         transition: all 0.18s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
     .nt-dropdown li a:hover,
     .nt-dropdown li a:focus {
-        background: rgba(232, 52, 78, 0.08);
-        border-left-color: #e8344e;
-        color: #1a1c20;
+        background: rgba(197, 160, 89, 0.08);
+        border-left-color: #C5A059;
+        color: #1a1c20 !important;
     }
 
     .nt-dropdown li+li {
         border-top: 1px solid #f0f1f3;
     }
+
 
     /* ============================================================
        MOBILE NAV
@@ -205,34 +228,31 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(20, 24, 32, 0.97) !important;
-            backdrop-filter: blur(14px);
+            background: rgba(26, 28, 32, 0.98) !important;
+            backdrop-filter: blur(15px);
             z-index: 999;
         }
 
-        /* Keep dark background on mobile even when scrolled */
         .navbar-area.scrolled {
-            background: rgba(20, 24, 32, 0.98) !important;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.30);
+            background: rgba(26, 28, 32, 0.99) !important;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.40);
         }
 
-        /* Keep nav links white on mobile when scrolled */
         .navbar-area.scrolled .nt-nav-link {
             color: #ffffff !important;
         }
 
-        /* Keep hamburger lines white on mobile when scrolled */
+        .navbar-area.scrolled .nt-logo {
+            color: #ffffff !important;
+        }
+
         .navbar-area.scrolled .nt-hamburger .line {
             background: #ffffff;
         }
 
-        .navbar-area.scrolled .nt-hamburger {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
         .nt-nav-inner {
-            padding: 0 1rem;
-            height: 60px;
+            padding: 0 1.5rem;
+            height: 70px;
         }
 
         .nt-desktop-nav-links,
@@ -249,10 +269,6 @@
         .nt-hamburger {
             display: none !important;
         }
-
-        .mobile-responsive-nav {
-            display: none !important;
-        }
     }
 
     /* Hamburger */
@@ -260,33 +276,28 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 5px;
-        width: 42px;
-        height: 42px;
+        gap: 6px;
+        width: 45px;
+        height: 45px;
         border: none;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.12);
+        border-radius: 4px;
+        background: transparent;
         cursor: pointer;
         padding: 0;
-        transition: background 0.2s ease;
+        transition: background 0.3s ease;
         flex-shrink: 0;
-    }
-
-    .nt-hamburger:hover {
-        background: rgba(255, 255, 255, 0.2);
     }
 
     .nt-hamburger .line {
         display: block;
-        width: 22px;
+        width: 26px;
         height: 2px;
-        border-radius: 2px;
         background: #ffffff;
         transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .nt-hamburger:not(.collapsed) .line1 {
-        transform: translateY(7px) rotate(45deg);
+        transform: translateY(8px) rotate(45deg);
     }
 
     .nt-hamburger:not(.collapsed) .line2 {
@@ -294,98 +305,71 @@
     }
 
     .nt-hamburger:not(.collapsed) .line3 {
-        transform: translateY(-7px) rotate(-45deg);
+        transform: translateY(-8px) rotate(-45deg);
     }
 
     /* Mobile menu panel */
     .nt-mobile-panel {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(26, 28, 32, 0.98);
     }
 
     .nt-mobile-list {
         list-style: none;
         margin: 0;
-        padding: 0.75rem 1rem 1.2rem;
+        padding: 1.5rem;
         max-height: calc(100vh - 70px);
         overflow-y: auto;
     }
 
     .nt-mobile-list>li {
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.5rem;
     }
 
     .nt-mobile-link {
         display: block;
-        padding: 0.8rem 1rem;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem;
         color: #ffffff !important;
-        font-size: 0.9rem;
-        font-weight: 700;
-        letter-spacing: 0.06em;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         text-decoration: none;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .nt-mobile-link:hover,
     .nt-mobile-link:focus,
     .nt-mobile-link.active {
-        background: #e8344e;
-        border-color: #e8344e;
-        color: #ffffff !important;
+        color: #C5A059 !important;
+        padding-left: 1.5rem;
     }
 
     .nt-mobile-phone {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        margin-top: 0.75rem;
-        padding: 0.8rem 1rem;
-        border-radius: 50px;
-        background: #e8344e;
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: #C5A059;
         color: #ffffff !important;
-        font-size: 0.9rem;
-        font-weight: 700;
+        font-size: 0.95rem;
+        font-weight: 600;
         text-decoration: none;
         justify-content: center;
-        box-shadow: 0 4px 16px rgba(232, 52, 78, 0.4);
-    }
-
-    /* Legacy classes kept for safety */
-    .mobile-responsive-nav {
-        display: block;
-    }
-
-    @media only screen and (min-width: 992px) {
-        .mobile-responsive-nav {
-            display: none !important;
-        }
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border-radius: 2px;
     }
 </style>
 
-@php
-$pendingProjects = DB::table('projects')
-->where('is_active', 1)->where('status', 1)->latest()->get();
-$runningProjects = DB::table('projects')
-->where('is_active', 1)->where('status', 2)->latest()->get();
-$completeProjects = DB::table('projects')
-->where('is_active', 1)->where('status', 3)->latest()->get();
-$services = DB::table('services')->where('is_active', 1)->latest()->get();
-@endphp
-
 <div class="navbar-area">
-
-    {{-- ═══════════════════════════════════════════════
-         DESKTOP NAV  (≥ 992 px)
-    ═══════════════════════════════════════════════ --}}
     <div class="container-fluid">
         <div class="nt-nav-inner">
 
             {{-- Logo --}}
             <a class="nt-logo" href="/">
-                <img src="{{ asset(get_setting('frontend_logo_menu')) }}" alt="logo">
+                <img src="{{ asset(get_setting('frontend_logo_menu')) }}" alt="Wedding House" class="img-fluid" style="height: 40px; width: auto;">
             </a>
 
             {{-- Nav links (centre / right) --}}
@@ -393,23 +377,32 @@ $services = DB::table('services')->where('is_active', 1)->latest()->get();
                 <li class="nt-nav-item {{ request()->is('/') ? 'active' : '' }}">
                     <a class="nt-nav-link" href="/">Home</a>
                 </li>
-                <li class="nt-nav-item {{ request()->is('about*') ? 'active' : '' }}">
-                    <a class="nt-nav-link" href="{{ route('about.index') }}">About Us</a>
+                <li class="nt-nav-item has-dropdown {{ request()->is('portfolio*') || request()->is('cinematography*') ? 'active' : '' }}">
+                    <a class="nt-nav-link" href="#">Gallery <i class="fa-solid fa-chevron-down" style="font-size:0.7rem; margin-left:3px;"></i></a>
+                    <ul class="nt-dropdown">
+                        <li><a href="{{ route('album.index') }}">Albums</a></li>
+                        <li><a href="{{ route('gallery.index') }}">Photo Gallery</a></li>
+                        <li><a href="{{ route('frontend.cinematography') }}">Video Gallery</a></li>
+                    </ul>
                 </li>
                 <li class="nt-nav-item {{ request()->is('service*') ? 'active' : '' }}">
-                    <a class="nt-nav-link" href="/service">Services</a>
+                    <a class="nt-nav-link" href="/service">Our Services</a>
                 </li>
-                <li class="nt-nav-item {{ request()->is('destination*') ? 'active' : '' }}">
-                    <a class="nt-nav-link" href="/destination">Destination</a>
+                <li class="nt-nav-item {{ request()->is('packages*') ? 'active' : '' }}">
+                    <a class="nt-nav-link" href="{{ route('frontend.packages') }}">Packages</a>
                 </li>
-                <li class="nt-nav-item {{ request()->is('testimonial*') ? 'active' : '' }}">
-                    <a class="nt-nav-link" href="/testimonial">Testimonials</a>
+                <li class="nt-nav-item {{ request()->is('book_us*') ? 'active' : '' }}">
+                    <a class="nt-nav-link" href="{{ route('frontend.book_us') }}">Book Us</a>
                 </li>
-                <li class="nt-nav-item {{ request()->is('blog*') ? 'active' : '' }}">
-                    <a class="nt-nav-link" href="/blogs">Blogs &amp; Events</a>
+
+                <li class="nt-nav-item {{ request()->is('blogs*') ? 'active' : '' }}">
+                    <a class="nt-nav-link" href="{{ route('frontend.blogs') }}">Blog</a>
                 </li>
-                <li class="nt-nav-item {{ request()->is('team*') ? 'active' : '' }}">
-                    <a class="nt-nav-link" href="/teams">Team</a>
+                <li class="nt-nav-item {{ request()->is('faq*') ? 'active' : '' }}">
+                    <a class="nt-nav-link" href="{{ route('frontend.faq') }}">FAQ</a>
+                </li>
+                <li class="nt-nav-item {{ request()->is('about*') ? 'active' : '' }}">
+                    <a class="nt-nav-link" href="{{ route('about.index') }}">About Us</a>
                 </li>
                 <li class="nt-nav-item {{ request()->is('contact*') ? 'active' : '' }}">
                     <a class="nt-nav-link" href="/contact">Contact</a>
@@ -418,11 +411,8 @@ $services = DB::table('services')->where('is_active', 1)->latest()->get();
 
             {{-- Phone CTA --}}
             <div class="nt-phone-btn-wrap">
-                <a class="nt-phone-btn" href="tel:01713032966">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.59.57 1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.59 1 1 0 01-.25 1.01l-2.2 2.19z" />
-                    </svg>
-                    01713-032966
+                <a class="nt-phone-btn" href="{{ route('frontend.book_us') }}">
+                    Book Now
                 </a>
             </div>
 
@@ -446,45 +436,40 @@ $services = DB::table('services')->where('is_active', 1)->latest()->get();
                     <a class="nt-mobile-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('about*') ? 'active' : '' }}"
-                        href="{{ route('about.index') }}">About Us</a>
+                    <a class="nt-mobile-link {{ request()->is('albums*') ? 'active' : '' }}" href="{{ route('album.index') }}">Albums</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('service*') ? 'active' : '' }}"
-                        href="/service">Services</a>
+                    <a class="nt-mobile-link {{ request()->is('gallery*') ? 'active' : '' }}" href="{{ route('gallery.index') }}">Photo Gallery</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('destination*') ? 'active' : '' }}"
-                        href="/destination">Destination</a>
+                    <a class="nt-mobile-link {{ request()->is('cinematography*') ? 'active' : '' }}" href="{{ route('frontend.cinematography') }}">Video Gallery</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('testimonial*') ? 'active' : '' }}"
-                        href="/testimonial">Testimonials</a>
+                    <a class="nt-mobile-link {{ request()->is('service*') ? 'active' : '' }}" href="/service">Our Services</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('blog*') ? 'active' : '' }}"
-                        href="/blogs">Blogs &amp; Events</a>
+                    <a class="nt-mobile-link {{ request()->is('packages*') ? 'active' : '' }}" href="{{ route('frontend.packages') }}">Packages</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('team*') ? 'active' : '' }}"
-                        href="/teams">Team</a>
+                    <a class="nt-mobile-link {{ request()->is('blogs*') ? 'active' : '' }}" href="{{ route('frontend.blogs') }}">Blog</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-link {{ request()->is('contact*') ? 'active' : '' }}"
-                        href="/contact">Contact</a>
+                    <a class="nt-mobile-link {{ request()->is('faq*') ? 'active' : '' }}" href="{{ route('frontend.faq') }}">FAQ</a>
                 </li>
                 <li>
-                    <a class="nt-mobile-phone" href="tel:01713032966">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.47 11.47 0 003.59.57 1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1 11.47 11.47 0 00.57 3.59 1 1 0 01-.25 1.01l-2.2 2.19z" />
-                        </svg>
-                        01713-032966
+                    <a class="nt-mobile-link {{ request()->is('about*') ? 'active' : '' }}" href="{{ route('about.index') }}">About Us</a>
+                </li>
+                <li>
+                    <a class="nt-mobile-link {{ request()->is('contact*') ? 'active' : '' }}" href="/contact">Contact</a>
+                </li>
+                <li>
+                    <a class="nt-mobile-phone" href="#">
+                        Book Now
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-
 </div>
 
 <script>
